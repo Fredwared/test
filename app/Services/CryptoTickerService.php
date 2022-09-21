@@ -35,7 +35,7 @@ class CryptoTickerService
     {
         try {
             $ratesRequest = $this->connection()->get('exchange_rates');;
-            return $ratesRequest->json();
+            return $ratesRequest->json()['rates'];
         }catch (Exception $exception){
             Log::error($exception->getMessage());
             return [];
