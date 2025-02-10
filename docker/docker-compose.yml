@@ -1,0 +1,35 @@
+services:
+  app:
+    container_name: '${APP_NAME}_app'
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+      args:
+        WWWGROUP: '${WWWGROUP:-1000}'
+    image: sail-8.2/app
+    ports:
+      - '8080:80'
+    volumes:
+      - '../www:/var/www/html'
+    depends_on:
+      - postgres
+  postgres:
+    container_name: '${APP_NAME}_postgres'
+    image: postgres:17-alpine
+    platform: 'linux/x86_64'
+    ports:
+      - '${FORWARD_DB_PORT:-5432}:5432'
+    environment:
+      PGPASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_DB: '${DB_DATABASE:-postgres}'
+      POSTGRES_USER: '${DB_USERNAME:-postgres}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-postgres}'
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+      retries: 3
+      timeout: 5s
+volumes:
+  app:
+  postgres:
