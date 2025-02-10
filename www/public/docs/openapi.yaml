@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/auth/login:
+    post:
+      summary: Login
+      operationId: login
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: ''
+                  example: nam
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: rerum
+                  nullable: false
+                string:
+                  type: password
+                  description: 'Password. Default: password'
+                  example: aperiam
+                  nullable: false
+              required:
+                - email
+                - password
+      security: []
+  /api/auth/register:
+    post:
+      summary: 'Register user'
+      operationId: registerUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the user'
+                  example: eos
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Email address of the user'
+                  example: idell15@example.org
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Password of the user'
+                  example: '|>fa(_Kj0c!+{Ld'
+                  nullable: false
+                password_confirmed:
+                  type: string
+                  description: 'Password of the user'
+                  example: quibusdam
+                  nullable: false
+              required:
+                - name
+                - email
+                - password
+                - password_confirmed
+      security: []
+  /api/user:
+    get:
+      summary: ''
+      operationId: getApiUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+tags:
+  -
+    name: Authentication
+    description: ''
+  -
+    name: Endpoints
+    description: ''
